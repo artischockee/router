@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "@types/react": "16.9.48",
+    "history": "5.0.0",
     "react": "16.13.1"
   }
 }
