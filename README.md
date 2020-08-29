@@ -4,7 +4,7 @@
 [![NPM version](https://img.shields.io/npm/v/@artischocke/router?style=flat-square)](https://www.npmjs.com/package/@artischocke/router)
 ![Minified size](https://img.shields.io/bundlephobia/min/@artischocke/router?style=flat-square)
 
-The library at the moment uses [history](https://www.npmjs.com/package/history) package of version `4.10.1`, because it is assumed that the `react-router-dom` library version is `5` (I won't work with version `6` until it releases from beta state).
+The library at the moment uses [history](https://www.npmjs.com/package/history) package of version `4.10.1`, because it is assumed that the [react-router-dom](https://www.npmjs.com/package/react-router-dom) library version is `5` (I won't work with version `6` until it releases from beta state).
 
 ## Install
 
@@ -43,12 +43,12 @@ Routes configuration:
 // config.ts
 
 import { lazy } from 'react';
-import { RoutesTypes } from '@artischocke/router';
+import { Routes as TRoutes } from '@artischocke/router';
 
 const IndexPage = lazy(() => import('../pages/indexPage'));
 const Page404 = lazy(() => import('../pages/page404'));
 
-const Routes: RoutesTypes.Routes = [
+const Routes: TRoutes = [
   {
     path: '/',
     component: IndexPage,
