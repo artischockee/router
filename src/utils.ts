@@ -1,4 +1,4 @@
-import { Router } from './types';
+import { SearchParams } from './types';
 
 /**
  * Processes specified page with format like '/:id', where 'id' is a
@@ -32,7 +32,7 @@ export function getProcessedPath(path: string, params?: Record<string, string | 
  * ({ foo: ['bar', 'baz'] }) => 'foo=bar&foo=baz'
  * ({ foo: 'bar', baz: ['oof', 'ofo'], bra: 'bra-bra' }) => 'foo=bar&baz=oof&baz=ofo&bra=bra-bra'
  */
-export function getProcessedSearch(searchParams?: Router.SearchParams | null, withQuestionMark = true): string {
+export function getProcessedSearch(searchParams?: SearchParams | null, withQuestionMark = true): string {
   if (searchParams == null || Object.keys(searchParams).length === 0) return '';
 
   const innerSearchParams: string[][] = [];
