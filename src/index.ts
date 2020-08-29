@@ -1,8 +1,8 @@
-import Router, { Router as InternalRouter } from './router';
+import { internalRouter } from './router';
 import { CreateRouterServiceParams } from './types';
 
 export function createRouterService(params: CreateRouterServiceParams): void {
-  InternalRouter.historyImplementation = params.history;
+  internalRouter.historyImplementation = params.history;
 }
 
 export {
@@ -15,4 +15,5 @@ export {
   RouteSettings,
   SearchParams,
 } from './types';
-export default Router;
+
+export { default, navigateTo, appendSearchQuery, goBack } from './router';

@@ -1,11 +1,11 @@
 import { getProcessedPath, getProcessedSearch } from './utils';
 import { InternalRouter, SearchParams } from './types';
 
-export const Router: InternalRouter = {
+export const internalRouter: InternalRouter = {
   historyImplementation: null,
 };
 
-function navigateTo(
+export function navigateTo(
   path: string,
   params?: Record<string, string | number> | null,
   searchParams?: SearchParams | null,
@@ -13,24 +13,26 @@ function navigateTo(
   const processedPath = getProcessedPath(path, params);
   const processedSearch = getProcessedSearch(searchParams);
 
-  Router.historyImplementation?.push({
+  internalRouter.historyImplementation?.push({
     pathname: processedPath,
     search: processedSearch,
   });
 }
 
-function appendSearchQuery(searchParams: SearchParams): void {
+export function appendSearchQuery(searchParams: SearchParams): void {
   const processedSearch = getProcessedSearch(searchParams);
 
-  Router.historyImplementation?.push({ search: processedSearch });
+  internalRouter.historyImplementation?.push({ search: processedSearch });
 }
 
-function goBack(): void {
-  Router.historyImplementation?.goBack();
+export function goBack(): void {
+  internalRouter.historyImplementation?.goBack();
 }
 
-export default {
+const Router = {
   navigateTo,
   appendSearchQuery,
   goBack,
 };
+
+export default Router;
