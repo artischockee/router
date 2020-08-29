@@ -45,14 +45,10 @@ describe('Router', () => {
     });
 
     it('should navigate to the specified path without params (null) but with query params', () => {
-      Router.navigateTo(
-        '/example',
-        null,
-        {
-          filter: 'true',
-          bar: ['baz', 'bax'],
-        },
-      );
+      Router.navigateTo('/example', null, {
+        filter: 'true',
+        bar: ['baz', 'bax'],
+      });
 
       expect(global.window.location.pathname).toEqual('/example');
       expect(global.window.location.search).toEqual('?filter=true&bar=baz&bar=bax');

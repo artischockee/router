@@ -6,16 +6,14 @@ export declare namespace Router {
   type SearchParams = Record<string, string | string[]>;
 
   interface InternalRouter {
-    historyImplementation: History | null,
+    historyImplementation: History | null;
   }
 
   interface CreateRouterServiceParams {
     history: History | null;
   }
 
-  type RouteComponent =
-    | React.LazyExoticComponent<any>
-    | ((props: RouteComponentProps) => React.ReactElement);
+  type RouteComponent = React.LazyExoticComponent<any> | ((props: RouteComponentProps) => React.ReactElement);
 
   type Routes = Route[];
 

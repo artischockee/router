@@ -87,7 +87,10 @@ describe('utils', () => {
     it('should respect "g" flag of the regexp even if not provided', () => {
       const result = getAllMatchesByRegExp(/:([A-z]+)/, '/test/:myId/:myTest');
 
-      expect(result).toStrictEqual([[':myId', 'myId'], [':myTest', 'myTest']]);
+      expect(result).toStrictEqual([
+        [':myId', 'myId'],
+        [':myTest', 'myTest'],
+      ]);
     });
   });
 });

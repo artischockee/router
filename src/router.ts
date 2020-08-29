@@ -33,4 +33,4 @@ export default {
   navigateTo,
   appendSearchQuery,
   goBack,
-}
+};
