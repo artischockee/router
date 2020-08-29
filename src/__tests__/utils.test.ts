@@ -1,4 +1,4 @@
-import Utils from '../utils';
+import Utils, { getAllMatchesByRegExp } from '../utils';
 import { Router } from '../types';
 
 describe('utils', () => {
@@ -73,6 +73,21 @@ describe('utils', () => {
       result = Utils.getProcessedSearch(searchParams);
 
       expect(result).toBe('?tab=competitions&foo=bar&foo=also-bar&baz=falsy');
+    });
+
+    it('should return correct string (without "?" mark in front) when one search param is presented and "withQuestionMark" set to "false"', () => {
+      searchParams = { tab: 'competitions' };
+      result = Utils.getProcessedSearch(searchParams, false);
+
+      expect(result).toBe('tab=competitions');
+    });
+  });
+
+  describe('getAllMatchesByRegExp()', () => {
+    it('should respect "g" flag of the regexp even if not provided', () => {
+      const result = getAllMatchesByRegExp(/:([A-z]+)/, '/test/:myId/:myTest');
+
+      expect(result).toStrictEqual([[':myId', 'myId'], [':myTest', 'myTest']]);
     });
   });
 });

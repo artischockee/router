@@ -4,19 +4,20 @@ import { Router } from './types';
  * Processes specified page with format like '/:id', where 'id' is a
  * URL parameter that must be replaced with real value taken from 'params'
  */
-export function getProcessedPath(path: string, params?: Partial<Router.RouteParams>): string {
-  if (params == null) return path as string;
+export function getProcessedPath(path: string, params?: Record<string, string | number> | null): string {
+  if (params == null) return path;
 
+  // TODO: allow custom regExp
   const regExp = /:([A-z]+)/g;
 
-  const matches = getAllMatchesByRegExp(regExp, path as string);
+  const matches = getAllMatchesByRegExp(regExp, path);
 
-  if (matches.length === 0) return path as string;
+  if (matches.length === 0) return path;
 
-  let formattedPath = path as string;
+  let formattedPath = path;
 
   matches.forEach((match) => {
-    formattedPath = formattedPath.replace(match[0], params[match[1]]);
+    formattedPath = formattedPath.replace(match[0], params[match[1]].toString());
   });
 
   return formattedPath;
@@ -31,7 +32,7 @@ export function getProcessedPath(path: string, params?: Partial<Router.RoutePara
  * ({ foo: ['bar', 'baz'] }) => 'foo=bar&foo=baz'
  * ({ foo: 'bar', baz: ['oof', 'ofo'], bra: 'bra-bra' }) => 'foo=bar&baz=oof&baz=ofo&bra=bra-bra'
  */
-export function getProcessedSearch(searchParams?: Router.SearchParams, withQuestionMark = true): string {
+export function getProcessedSearch(searchParams?: Router.SearchParams | null, withQuestionMark = true): string {
   if (searchParams == null || Object.keys(searchParams).length === 0) return '';
 
   const innerSearchParams: string[][] = [];

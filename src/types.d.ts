@@ -2,6 +2,7 @@ import React from 'react';
 import { History } from 'history';
 
 export declare namespace Router {
+  // TODO: allow to pass numbers (so the result is: Record<string, string | number | string[] | number[]>)
   type SearchParams = Record<string, string | string[]>;
 
   interface InternalRouter {
@@ -26,17 +27,17 @@ export declare namespace Router {
     subRoutes?: Route[];
   }
 
+  // TODO: extend possible options; allow user to provide their own route settings
   interface RouteSettings {
     exact: boolean;
     isPrivate: boolean;
   }
 
+  // TODO: extend possible options; allow user to provide their own component settings
   interface ComponentSettings {
     usePageWrapper: boolean;
     useHeader: boolean;
   }
-
-  type RouteParams = Record<string, any>;
 
   interface RouteComponentProps {
     subRoutes?: Route[];

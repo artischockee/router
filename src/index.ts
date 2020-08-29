@@ -1,13 +1,9 @@
 import { Router as RouterTypes } from './types';
-
-export const Router: RouterTypes.InternalRouter = {
-  historyImplementation: null,
-};
+import Router, { Router as InternalRouter } from './router';
 
 export function createRouterService(params: RouterTypes.CreateRouterServiceParams): void {
-  Router.historyImplementation = params.history;
+  InternalRouter.historyImplementation = params.history;
 }
 
-export type Routes = RouterTypes.Routes;
-
-export { default } from './router';
+export { RouterTypes };
+export default Router;
