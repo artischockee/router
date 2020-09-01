@@ -1,16 +1,16 @@
 import { getProcessedPath, getProcessedSearch } from './utils';
-import { InternalRouter, SearchParams } from './types';
+import { InternalRouter, SearchParams, ToStringableObject } from './types';
 
 export const internalRouter: InternalRouter = {
   historyImplementation: null,
 };
 
-export function navigateTo(
-  path: string,
+export function navigateTo<BaseURL extends string, Paths extends Record<string, string>>(
+  path: string | ToStringableObject<BaseURL, Paths>,
   params?: Record<string, string | number> | null,
   searchParams?: SearchParams | null,
 ): void {
-  const processedPath = getProcessedPath(path, params);
+  const processedPath = getProcessedPath(path.toString(), params);
   const processedSearch = getProcessedSearch(searchParams);
 
   internalRouter.historyImplementation?.push({
