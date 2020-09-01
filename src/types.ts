@@ -8,6 +8,29 @@ export interface InternalRouter {
   historyImplementation: History | null;
 }
 
+/**
+ * An object like
+ *
+ * {
+ *   path1: '/path1',
+ *   pathComplex: {
+ *     subPath1: '/sub-path-1',
+ *     subPath2: '/sub-path-2'
+ *   },
+ *   ..,
+ *   toString() {
+ *     return BaseURL;
+ *   }
+ * }
+ *
+ * where 'BaseURL' is the 1st argument of getRouterNode() utility.
+ * The objects of type ToStringableObject are being created by getRouterNode() function.
+ * You do not want to use this type explicitly.
+ */
+export type ToStringableObject<BaseURL extends string, Paths extends Record<string, string>> = {
+  toString(): BaseURL;
+} & Paths;
+
 export interface CreateRouterServiceParams {
   history: History | null;
 }
