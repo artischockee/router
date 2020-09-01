@@ -37,6 +37,38 @@ createRouterService({
 export default history;
 ```
 
+Router paths configuration:
+
+```typescript
+// routerPaths.ts
+
+import { getRouterNode } from '@artischocke/router';
+
+const RouterPaths = {
+  indexPage: '/',
+  employerPage: getRouterNode('/employer', {
+    tariffsSection: '/tariffs',
+    vacanciesSection: '/vacancies',
+  }),
+  page404: '*',
+};
+
+// getRouterNode() returns an object with injected toString() and valueOf().
+// This helps the methods like navigateTo() transform the passed object to string
+// and receive expected value (like '/employer' in this case).
+//
+// However, if you use this 'toStringable' object elsewhere
+// (where no '.toString()' transformations exist), you must
+// call '.toString()' explicitly:
+//
+// console.log(RouterPaths.employerPage.toString());
+//  -> '/employer'
+// console.log(RouterPaths.employerPage.tariffsSection);
+//  -> '/employer/tariffs'
+
+export default RouterPaths;
+```
+
 Routes configuration:
 
 ```typescript
@@ -44,30 +76,55 @@ Routes configuration:
 
 import { lazy } from 'react';
 import { Routes as TRoutes } from '@artischocke/router';
+import RouterPaths from './routerPaths';
 
 const IndexPage = lazy(() => import('../pages/indexPage'));
+const EmployerPage = lazy(() => import('../pages/employerPage'));
 const Page404 = lazy(() => import('../pages/page404'));
 
 const Routes: TRoutes = [
   {
-    path: '/',
+    path: RouterPaths.indexPage,
     component: IndexPage,
-    settings: {
-      exact: true,
-      isPrivate: false,
-    },
+    settings: { exact: true, isPrivate: false },
     componentSettings: {
       usePageWrapper: true,
       useHeader: true,
     },
   },
   {
+    path: RouterPaths.employerPage,
+    component: EmployerPage,
+    settings: { exact: false, isPrivate: false },
+    componentSettings: {
+      usePageWrapper: true,
+      useHeader: true,
+    },
+    subRoutes: [
+      {
+        path: RouterPaths.employerPage.tariffsSection,
+        component: /* another lazy loaded component */,
+        settings: { exact: true, isPrivate: true },
+        componentSettings: {
+          usePageWrapper: false,
+          useHeader: false,
+        },
+      },
+      {
+        path: RouterPaths.employerPage.vacanciesSection,
+        component: /* another lazy loaded component */,
+        settings: { exact: true, isPrivate: true },
+        componentSettings: {
+          usePageWrapper: false,
+          useHeader: false,
+        },
+      },
+    ],
+  },
+  {
     path: RouterPaths.page404,
     component: Page404,
-    settings: {
-      exact: false,
-      isPrivate: false,
-    },
+    settings: { exact: false, isPrivate: false },
     componentSettings: {
       usePageWrapper: true,
       useHeader: true,
@@ -150,6 +207,9 @@ _<to-do>_
 - [ ] Write meaningful description
 - [ ] Write API reference
 - [ ] Extend possible options in `Route.settings` and `Route.componentSettings` configurations
+- [ ] Adding own route settings
+- [ ] Adding own component settings
+- [ ] Custom variable pattern (not only `/:([A-z]+)/g` pattern)
 
 ## Issues
 
