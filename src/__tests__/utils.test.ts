@@ -1,5 +1,5 @@
-import Utils, { getAllMatchesByRegExp } from '../utils';
-import { Router } from '../types';
+import Utils, { getAllMatchesByRegExp, getRouterNode } from '../utils';
+import { SearchParams } from '../types';
 
 describe('utils', () => {
   describe('getProcessedPath()', () => {
@@ -38,7 +38,7 @@ describe('utils', () => {
   });
 
   describe('getProcessedSearch()', () => {
-    let searchParams: Router.SearchParams;
+    let searchParams: SearchParams;
     let result: string;
 
     it('should return empty string when there is no search params', () => {
@@ -80,6 +80,27 @@ describe('utils', () => {
       result = Utils.getProcessedSearch(searchParams, false);
 
       expect(result).toBe('tab=competitions');
+    });
+  });
+
+  describe('getRouterNode()', () => {
+    let result;
+
+    it('should return correct object', () => {
+      result = getRouterNode('/parent', {
+        child1: '/child-1',
+        child2: '/child-2',
+      });
+
+      expect(result).toStrictEqual({
+        child1: '/parent/child-1',
+        child2: '/parent/child-2',
+        toString: expect.any(Function),
+        valueOf: expect.any(Function),
+      });
+
+      expect(result.toString()).toBe('/parent');
+      expect(result.valueOf()).toBe('/parent');
     });
   });
 

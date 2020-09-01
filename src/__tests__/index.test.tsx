@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import Router, { createRouterService } from '../index';
+import { getRouterNode } from '../utils';
 
 describe('Router', () => {
   beforeAll(() => {
@@ -66,6 +67,28 @@ describe('Router', () => {
 
       expect(global.window.location.pathname).toEqual('/example');
       expect(global.window.location.search).toEqual('?filter=true&bar=baz&bar=bax');
+    });
+  });
+
+  describe('navigateTo() with "toStringable" object as a path', () => {
+    const path = {
+      indexPage: "/",
+      employerPage: getRouterNode("/employer", {
+        recruitmentStepsSection: "/recruitment-steps",
+      }),
+      page404: "*",
+    };
+
+    it('should navigate to the specified core path', () => {
+      Router.navigateTo(path.employerPage);
+
+      expect(global.window.location.pathname).toEqual('/employer');
+    });
+
+    it('should navigate to the specified sub route path', () => {
+      Router.navigateTo(path.employerPage.recruitmentStepsSection);
+
+      expect(global.window.location.pathname).toEqual('/employer/recruitment-steps');
     });
   });
 
