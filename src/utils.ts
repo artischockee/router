@@ -1,4 +1,4 @@
-import { SearchParams } from './types';
+import { SearchParams, ToStringableObject } from './types';
 
 /**
  * Processes specified page with format like '/:id', where 'id' is a
@@ -53,6 +53,25 @@ export function getProcessedSearch(searchParams?: SearchParams | null, withQuest
   const urlSearchParams = new URLSearchParams(innerSearchParams);
 
   return `${withQuestionMark ? '?' : ''}${urlSearchParams.toString()}`;
+}
+
+export function getRouterNode<BaseURL extends string, SR extends Record<string, string>>(
+  baseUrl: BaseURL,
+  subRoutes: SR,
+): ToStringableObject<BaseURL, SR> {
+  const routerNode = Object.entries(subRoutes).reduce((acc, [k, v]) => {
+    return { ...acc, [k]: baseUrl + v };
+  }, {} as ToStringableObject<BaseURL, SR>);
+
+  routerNode.valueOf = function () {
+    return baseUrl;
+  };
+
+  routerNode.toString = function () {
+    return baseUrl;
+  };
+
+  return routerNode;
 }
 
 export function getAllMatchesByRegExp(regExp: RegExp, string: string): string[][] {
