@@ -14,6 +14,9 @@ export {
   RouteComponentProps,
   RouteSettings,
   SearchParams,
+  ToStringableObject,
 } from './types';
+
+export { getRouterNode } from './utils';
 
 export { default, navigateTo, appendSearchQuery, goBack } from './router';
