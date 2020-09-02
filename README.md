@@ -75,14 +75,14 @@ Routes configuration:
 // config.ts
 
 import { lazy } from 'react';
-import { Routes as TRoutes } from '@artischocke/router';
+import { getRouterPaths } from '@artischocke/router';
 import RouterPaths from './routerPaths';
 
 const IndexPage = lazy(() => import('../pages/indexPage'));
 const EmployerPage = lazy(() => import('../pages/employerPage'));
 const Page404 = lazy(() => import('../pages/page404'));
 
-const Routes: TRoutes = [
+const Routes = getRouterPaths([
   {
     path: RouterPaths.indexPage,
     component: IndexPage,
@@ -130,7 +130,7 @@ const Routes: TRoutes = [
       useHeader: true,
     },
   },
-];
+]);
 
 export default Routes;
 ```
