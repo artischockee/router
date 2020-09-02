@@ -9,6 +9,7 @@ export {
   CreateRouterServiceParams,
   Routes,
   Route,
+  BaseRoute,
   ComponentSettings,
   RouteComponent,
   RouteComponentProps,
@@ -17,6 +18,6 @@ export {
   ToStringableObject,
 } from './types';
 
-export { getRouterNode } from './utils';
+export { getRouterNode, getRouterPaths } from './utils';
 
 export { default, navigateTo, appendSearchQuery, goBack } from './router';

@@ -39,12 +39,22 @@ export type RouteComponent = React.LazyExoticComponent<any> | ((props: RouteComp
 
 export type Routes = Route[];
 
-export interface Route {
-  path: string;
+export type RoutesDirty<BaseURL extends string, Paths extends Record<string, string>> = RouteDirty<BaseURL, Paths>[];
+
+export interface BaseRoute {
   component: RouteComponent;
   settings: RouteSettings;
   componentSettings: ComponentSettings;
+}
+
+export interface Route extends BaseRoute {
+  path: string;
   subRoutes?: Route[];
+}
+
+export interface RouteDirty<BaseURL extends string, Paths extends Record<string, string>> extends BaseRoute {
+  path: string | ToStringableObject<BaseURL, Paths>;
+  subRoutes?: RouteDirty<BaseURL, Paths>[];
 }
 
 // TODO: extend possible options; allow user to provide their own route settings

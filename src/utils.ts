@@ -1,4 +1,4 @@
-import { SearchParams, ToStringableObject } from './types';
+import { SearchParams, ToStringableObject, Routes, RoutesDirty } from './types';
 
 /**
  * Processes specified page with format like '/:id', where 'id' is a
@@ -72,6 +72,18 @@ export function getRouterNode<BaseURL extends string, SR extends Record<string, 
   };
 
   return routerNode;
+}
+
+export function getRouterPaths<BaseURL extends string, Paths extends Record<string, string>>(
+  obj: RoutesDirty<BaseURL, Paths>,
+): Routes {
+  return obj.map((entry) => ({
+    ...entry,
+    path: entry.path.toString(),
+    settings: { ...entry.settings },
+    componentSettings: { ...entry.componentSettings },
+    subRoutes: entry.subRoutes == null ? entry.subRoutes : getRouterPaths(entry.subRoutes),
+  }));
 }
 
 export function getAllMatchesByRegExp(regExp: RegExp, string: string): string[][] {
