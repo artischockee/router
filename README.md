@@ -223,9 +223,9 @@ _<to-do>_
 
 - [ ] Write meaningful description
 - [ ] Write API reference
-- [ ] Extend possible options in `Route.settings` and `Route.componentSettings` configurations
-- [ ] Adding own route settings
-- [ ] Adding own component settings
+- [x] Extend possible options in `Route.settings` and `Route.componentSettings` configurations
+- [x] Adding own route settings
+- [x] Adding own component settings
 - [ ] Custom variable pattern (not only `/:([A-z]+)/g` pattern)
 
 ## Issues
