@@ -82,7 +82,24 @@ const IndexPage = lazy(() => import('../pages/indexPage'));
 const EmployerPage = lazy(() => import('../pages/employerPage'));
 const Page404 = lazy(() => import('../pages/page404'));
 
-const Routes = getRouterPaths([
+// You can provide your optional interfaces
+// both for 'settings' entry (called 'RouteSettings')
+// and for 'componentSettings' one (called 'ComponentSettings'):
+
+interface RS {
+    exact: boolean;
+    isPrivate: boolean;
+}
+
+interface CS {
+    usePageWrapper: boolean;
+    useHeader: boolean;
+}
+
+// Later on, use the interfaces from above in 'getRouterPaths' call signature
+// (they will help IDE to autocomplete entries in these objects):
+
+const Routes = getRouterPaths<RS, CS>([
   {
     path: RouterPaths.indexPage,
     component: IndexPage,
