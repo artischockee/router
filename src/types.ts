@@ -35,14 +35,16 @@ export interface CreateRouterServiceParams {
   history: History | null;
 }
 
-export type RouteComponent = React.LazyExoticComponent<any> | ((props: RouteComponentProps) => React.ReactElement);
+export type RouteComponent<RS, CS> =
+  | React.LazyExoticComponent<any>
+  | ((props: RouteComponentProps<RS, CS>) => React.ReactElement);
 
 export type Routes<RS, CS> = Route<RS, CS>[];
 
 export type RoutesDirty<RS, CS> = RouteDirty<RS, CS>[];
 
 export interface BaseRoute<RouteSettings = Record<string, any>, ComponentSettings = Record<string, any>> {
-  component: RouteComponent;
+  component: RouteComponent<RouteSettings, ComponentSettings>;
   settings: RouteSettings;
   componentSettings: ComponentSettings;
 }
@@ -57,6 +59,6 @@ export interface RouteDirty<RS, CS> extends BaseRoute<RS, CS> {
   subRoutes?: RouteDirty<RS, CS>[];
 }
 
-export interface RouteComponentProps {
-  subRoutes?: Route<Record<string, any>, Record<string, any>>[];
+export interface RouteComponentProps<RS, CS> {
+  subRoutes?: Route<RS, CS>[];
 }
