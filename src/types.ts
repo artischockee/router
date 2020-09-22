@@ -41,7 +41,7 @@ export type Routes<RS, CS> = Route<RS, CS>[];
 
 export type RoutesDirty<RS, CS> = RouteDirty<RS, CS>[];
 
-export interface BaseRoute<RouteSettings = Record<string, unknown>, ComponentSettings = Record<string, unknown>> {
+export interface BaseRoute<RouteSettings = Record<string, any>, ComponentSettings = Record<string, any>> {
   component: RouteComponent;
   settings: RouteSettings;
   componentSettings: ComponentSettings;
@@ -58,5 +58,5 @@ export interface RouteDirty<RS, CS> extends BaseRoute<RS, CS> {
 }
 
 export interface RouteComponentProps {
-  subRoutes?: Route<Record<string, unknown>, Record<string, unknown>>[];
+  subRoutes?: Route<Record<string, any>, Record<string, any>>[];
 }
