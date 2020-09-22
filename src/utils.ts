@@ -55,10 +55,7 @@ export function getProcessedSearch(searchParams?: SearchParams | null, withQuest
   return `${withQuestionMark ? '?' : ''}${urlSearchParams.toString()}`;
 }
 
-export function getRouterNode<BaseURL extends string, SR extends Record<string, string>>(
-  baseUrl: BaseURL,
-  subRoutes: SR,
-): ToStringableObject<BaseURL, SR> {
+export function getRouterNode<BaseURL, SR>(baseUrl: BaseURL, subRoutes: SR): ToStringableObject<BaseURL, SR> {
   const routerNode = Object.entries(subRoutes).reduce((acc, [k, v]) => {
     return { ...acc, [k]: baseUrl + v };
   }, {} as ToStringableObject<BaseURL, SR>);
@@ -74,9 +71,9 @@ export function getRouterNode<BaseURL extends string, SR extends Record<string, 
   return routerNode;
 }
 
-export function getRouterPaths<BaseURL extends string, Paths extends Record<string, string>>(
-  obj: RoutesDirty<BaseURL, Paths>,
-): Routes {
+export function getRouterPaths<RouteSettings, ComponentSettings>(
+  obj: RoutesDirty<RouteSettings, ComponentSettings>,
+): Routes<RouteSettings, ComponentSettings> {
   return obj.map((entry) => ({
     ...entry,
     path: entry.path.toString(),

@@ -27,7 +27,7 @@ export interface InternalRouter {
  * The objects of type ToStringableObject are being created by getRouterNode() function.
  * You do not want to use this type explicitly.
  */
-export type ToStringableObject<BaseURL extends string, Paths extends Record<string, string>> = {
+export type ToStringableObject<BaseURL = string, Paths = Record<string, string>> = {
   toString(): BaseURL;
 } & Paths;
 
@@ -37,38 +37,26 @@ export interface CreateRouterServiceParams {
 
 export type RouteComponent = React.LazyExoticComponent<any> | ((props: RouteComponentProps) => React.ReactElement);
 
-export type Routes = Route[];
+export type Routes<RS, CS> = Route<RS, CS>[];
 
-export type RoutesDirty<BaseURL extends string, Paths extends Record<string, string>> = RouteDirty<BaseURL, Paths>[];
+export type RoutesDirty<RS, CS> = RouteDirty<RS, CS>[];
 
-export interface BaseRoute {
+export interface BaseRoute<RouteSettings = Record<string, unknown>, ComponentSettings = Record<string, unknown>> {
   component: RouteComponent;
   settings: RouteSettings;
   componentSettings: ComponentSettings;
 }
 
-export interface Route extends BaseRoute {
+export interface Route<RS, CS> extends BaseRoute<RS, CS> {
   path: string;
-  subRoutes?: Route[];
+  subRoutes?: Route<RS, CS>[];
 }
 
-export interface RouteDirty<BaseURL extends string, Paths extends Record<string, string>> extends BaseRoute {
-  path: string | ToStringableObject<BaseURL, Paths>;
-  subRoutes?: RouteDirty<BaseURL, Paths>[];
-}
-
-// TODO: extend possible options; allow user to provide their own route settings
-export interface RouteSettings {
-  exact: boolean;
-  isPrivate: boolean;
-}
-
-// TODO: extend possible options; allow user to provide their own component settings
-export interface ComponentSettings {
-  usePageWrapper: boolean;
-  useHeader: boolean;
+export interface RouteDirty<RS, CS> extends BaseRoute<RS, CS> {
+  path: string | ToStringableObject;
+  subRoutes?: RouteDirty<RS, CS>[];
 }
 
 export interface RouteComponentProps {
-  subRoutes?: Route[];
+  subRoutes?: Route<Record<string, unknown>, Record<string, unknown>>[];
 }

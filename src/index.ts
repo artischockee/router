@@ -10,10 +10,8 @@ export {
   Routes,
   Route,
   BaseRoute,
-  ComponentSettings,
   RouteComponent,
   RouteComponentProps,
-  RouteSettings,
   SearchParams,
   ToStringableObject,
 } from './types';
